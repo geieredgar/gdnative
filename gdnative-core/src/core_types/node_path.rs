@@ -67,8 +67,14 @@ impl NodePath {
 
     /// Get the number of node names which make up the path.
     #[inline]
-    pub fn name_count(&mut self) -> i32 {
-        unsafe { (get_api().godot_node_path_get_name_count)(&mut self.0) }
+    pub fn name_count(&self) -> i32 {
+        unsafe { (get_api().godot_node_path_get_name_count)(&self.0) }
+    }
+
+    /// Returns the name of the specified `idx`, 0 to name_count()
+    #[inline]
+    pub fn get_name(&self, idx: i32) -> GodotString {
+        unsafe { GodotString((get_api().godot_node_path_get_name)(&self.0, idx)) }
     }
 
     /// Returns the resource name of the specified `idx`, 0 to subname_count()
